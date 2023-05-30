@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row">
+    <ng-template #headingTemplate let-group="group" let-index="index">
+      {{"HI"}}
+    </ng-template>
+    <ng-template #subHeadingTemplate let-group="group" let-index="index">
+      <span>{{"Subheading"}}</span>
+    </ng-template>
+    <ng-template #titleTemplate>
+      <h3 class="text-center">Notifications Drawer</h3>
+    </ng-template>
+    <ng-template #notificationBodyTemplate let-notify="notify" let-index="index">
+      <div class="pull-right" *ngIf="notify.moreActions.length > 0">
+        <app-action class="list-pf-actions" [config]="actionConfig" (onActionSelect)="handleAction($event)"></app-action>
+      </div>
+      <span class="pull-left pficon pficon-ok" *ngIf="notify.type === 'success'"></span>
+      <span class="pull-left pficon pficon-info" *ngIf="notify.type === 'info'"></span>
+      <span class="pull-left pficon pficon-error-circle-o" *ngIf="notify.type === 'danger'"></span>
+      <span class="pull-left pficon pficon-warning-triangle-o" *ngIf="notify.type === 'warning'"></span>
+      <div class="drawer-pf-notification-content" (click)="markAsRead(notify)">
+        <span class="drawer-pf-notification-message">
+          {{notify.message}}
+        </span>
+        <div class="drawer-pf-notification-info">
+          <span class="date">{{notify.timeStamp | date:'MM/dd/yyyy'}}</span>
+          <span class="time">{{notify.timeStamp | date:'h:mm:ss a'}}</span>
+        </div>
+      </div>
+    </ng-template>
+    <H1>
+      APP NOTIFICATION STARTS HERE
+    </H1>
+    <app-notification-drawer
+    [allowExpand]="true"
+    [headingTemplate]="headingTemplate"
+    [hidden]="false"
+    [notificationGroups]="groups"
+    [showClearAll]="true"
+    [showMarkAllRead]="true"
+    [subHeadingTemplate]="subHeadingTemplate"
+    [title]="'Notifications Drawer'"
+    [titleTemplate]="titleTemplate"
+    [notificationBodyTemplate]="notificationBodyTemplate"
+    (close)="close($event)"
+    (unreadNotifications)="unreadNotifications($event)">
+    </app-notification-drawer>
+  </div>
+  <div class="row">
+    <app-empty-state [config]="emptyStateConfig2" (onActionSelect)="handleAction($event)"></app-empty-state>
+  </div>
+</div>
